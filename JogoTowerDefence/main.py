@@ -1,6 +1,7 @@
 import pygame as pg
-from inimigo import Inimigo
-from torre import Torre
+from inimigos.inimigo import Inimigo
+from torres.torre import Torre
+from botao import Botao
 from mundo import Mundo
 import constantes as c
 import paletaDeCores as pdc
@@ -13,8 +14,13 @@ pgim = pg.image.load
 clock = pg.time.Clock()
 
 # criar a tela do jogo
-tela = pg.display.set_mode((c.TELA_LARGURA, c.TELA_ALTURA))
+tela = pg.display.set_mode((c.TELA_LARGURA + c.PAINEL, c.TELA_ALTURA))
 pg.display.set_caption("Tower Defence")
+
+#############
+# Variáveis #
+#############
+colocarTorre = False
 
 ###################
 # carregar imagem #
@@ -32,6 +38,9 @@ imgZombieRato = pgim('arte/imagens/inimigos/ZombieRato.png').convert_alpha()
 # imagenns Torres
 imgTorre = pgim('arte/imagens/torres/torre1.png').convert_alpha()
 
+# Imagens botões
+imgCancelBtn = pgim ('arte/imagens/botao/cancelBtn.png').convert_alpha()
+imgComprarBtn = pgim ('arte/imagens/botao/comprarBtn.png').convert_alpha()
 
 def criarTorre(posMouse):
     mouseQuadX = posMouse[0] // c.TAMANHO_QUADRADO
@@ -48,6 +57,9 @@ grupoInimigo = pg.sprite.Group()
 grupoTorre = pg.sprite.Group()
 
 # criar botões
+
+botaoTorre = Botao (c.TELA_LARGURA + 30, 120, imgComprarBtn )
+botaoCancel = Botao (c.TELA_LARGURA + 50, 180, imgCancelBtn)
 
 inimigo = Inimigo(mundo.waypoint, imgZombieNorm)
 grupoInimigo.add(inimigo)
@@ -81,6 +93,14 @@ while rodar:
     # desenhar Grupos
     grupoInimigo.draw(tela)
     grupoTorre.draw(tela)
+
+    # desenhar Botoes
+    if botaoTorre.draw (tela):
+        colocarTorre = True
+        
+    if colocarTorre == True:
+        if botaoCancel.draw (tela):
+         colocarTorre = False
 
     #########################
     # GERENCIANDO EVENTOS  #

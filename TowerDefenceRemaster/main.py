@@ -1,11 +1,11 @@
 import pygame as pg
 from models.entities.inimigo import Inimigo
 from models.entities.torre import Torre
-from views.components.botao import Botao
+from views.components.baseComponents.botao import Botao
 from views.components.mundo import Mundo
 import constantes as c
 import constantes.paletaDeCores as pdc
-
+from views.components.menu import Menu
 
 # iniciar o pygame
 pg.init()
@@ -39,8 +39,9 @@ imgZombieRato = pgim('midia/imagens/inimigos/zombieRato.png').convert_alpha()
 imgTorre = pgim('midia/imagens/torres/torre1.png').convert_alpha()
 
 # Imagens botões
-imgCancelBtn = pgim ('midia/imagens/botao/cancelBtn.png').convert_alpha()
-imgComprarBtn = pgim ('midia/imagens/botao/comprarBtn.png').convert_alpha()
+imgCancelBtn = pgim('midia/imagens/botao/cancelBtn.png').convert_alpha()
+imgComprarBtn = pgim('midia/imagens/botao/comprarBtn.png').convert_alpha()
+
 
 def criarTorre(posMouse):
     mouseQuadX = posMouse[0] // c.TAMANHO_QUADRADO
@@ -52,19 +53,23 @@ def criarTorre(posMouse):
 # criar Mundo
 mundo = Mundo(imgMapa)
 
+# Criar menu
+menu = Menu(tela)
+
 # criar grupos
 grupoInimigo = pg.sprite.Group()
 grupoTorre = pg.sprite.Group()
 
 # criar botões
-
-botaoTorre = Botao (c.TELA_LARGURA + 30, 120, imgComprarBtn )
-botaoCancel = Botao (c.TELA_LARGURA + 50, 180, imgCancelBtn)
+botaoTorre = Botao(c.TELA_LARGURA + 30, 120, imgComprarBtn)
+botaoCancel = Botao(c.TELA_LARGURA + 50, 180, imgCancelBtn)
 
 inimigo = Inimigo(mundo.waypoint, imgZombieNorm)
 grupoInimigo.add(inimigo)
 
-
+world_state = {
+    
+}
 # loop do jogo
 rodar = True
 while rodar:
@@ -82,19 +87,11 @@ while rodar:
     mundo.draw(tela)
     grupoInimigo.draw(tela)
     grupoTorre.draw(tela)
-    
+
     # desenhar caminho do inimigo
     pg.draw.lines(tela, pdc.cinza, False, mundo.waypoint)
 
-
-
-    # desenhar Botoes
-    if botaoTorre.draw(tela):
-        colocarTorre = True
-        
-    if colocarTorre == True:
-        if botaoCancel.draw(tela):
-            colocarTorre = False
+    menu.draw(world_state)
 
     #########################
     # GERENCIANDO EVENTOS  #
@@ -111,8 +108,6 @@ while rodar:
             # checar se o mouse está na área do jogo
             if posMouse[0] < c.TELA_LARGURA and posMouse[1] < c.TELA_ALTURA:
                 criarTorre(posMouse)
-
     # atualizar a tela
     pg.display.flip()
-
 pg.quit()

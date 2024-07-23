@@ -6,7 +6,8 @@ import constantes as c
 class BotaoTorre(Botao):
     def __init__(self, x, y, image):
         super().__init__(x, y, image)
-
+        self.pos = pg.mouse.get_pos()
+        
     def action(self, state, world_state):
         state['botaoCancel'] = True
         return state
@@ -24,3 +25,5 @@ class BotaoTorre(Botao):
 
         screen.blit(self.image, self.rect)
         return state
+    
+        

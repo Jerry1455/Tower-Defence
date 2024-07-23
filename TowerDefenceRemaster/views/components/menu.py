@@ -11,9 +11,9 @@ class Menu:
         self.screen = screen
         self.state = {'botaoCancel': False,
                       'botaoTorre': True, 'botaoTorre2': True}
-        self.components = {'botaoTorre': BotaoTorre(c.TELA_LARGURA + c.OFF_SET, c.OFF_SET, self.midia.img_iconeDMG_btn),
-                           'botaoTorre2': BotaoTorre(c.TELA_LARGURA + c.TAMANHO_ICONES+c.OFF_SET, c.OFF_SET, self.midia.img_iconeMGC_btn),
-                           'botaoCancel': BotaoCancel(c.TELA_LARGURA + 120, 180, self.midia.img_cancel_btn)}
+        self.components = {'botaoTorre': BotaoTorre((c.TELA_LARGURA + c.OFF_SET, c.OFF_SET), self.midia.img_iconeDMG_btn),
+                           'botaoTorre2': BotaoTorre((c.TELA_LARGURA + c.TAMANHO_ICONES+c.OFF_SET, c.OFF_SET), self.midia.img_iconeMGC_btn),
+                           'botaoCancel': BotaoCancel((c.TELA_LARGURA + 120, 180), self.midia.img_cancel_btn)}
         self.submenu = {'botaoTorre': [], 'botaoCancel': None}
 
     def draw(self, world_state):

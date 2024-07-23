@@ -18,6 +18,7 @@ class Midia:
 
         # Imagens botões
         self.img_cancel_btn = pgim ('midia/imagens/botao/cancelBtn.png').convert_alpha()
+        self.img_bandeira_btn = pgim ('midia/imagens/botao/bandeira.png').convert_alpha()
         self.img_iconeDMG_btn = pgim ('midia/imagens/botao/iconeDmg.png').convert_alpha()
         self.img_iconeMGC_btn = pgim ('midia/imagens/botao/iconeMgc.png').convert_alpha()
         self.img_iconeAREA_btn = pgim ('midia/imagens/botao/iconeArea.png').convert_alpha()

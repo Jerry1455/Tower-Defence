@@ -1,13 +1,18 @@
 import pygame as pg
 import constantes as c
 from views.components.botaoBandeira import BotaoBandeira
-from views.components.grupos import Grupos as gp
+from midia.access import Midia
+
 
 class Mundo ():
-    def __init__(self, imgMapa, surface):
+    def __init__(self, imgMapa, screen):
+        self.midia = Midia()
         self.image = imgMapa
         self.enemyWpPx = []
-        surface.blit(self.image, (0, 0))
+        self.flags = []
+        self.flagsGroup = pg.sprite.Group()
+
+        screen.blit(self.image, (0, 0))
         self.enemyWp = [
             (2, 0),
             (2, 2),
@@ -18,33 +23,8 @@ class Mundo ():
             (11, 7),
             (11, 9),
         ]
-        self.enemyWpPx = self.drawWaypoint()
-    def drawWaypoint(self):
-        enemyWpPx = []
-        for x, y in self.enemyWp:
-            if x > 0 and y > 0:
-                enemyWpPx.append(((x*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2,
-                                 (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
-            elif x > 0:
-                enemyWpPx.append(((x*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2,
-                                 (y*c.TAMANHO_QUADRADO)))
-            elif y > 0:
-                enemyWpPx.append(((x*c.TAMANHO_QUADRADO),
-                                 (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
-        return enemyWpPx
-
-    def draw(self, surface):
-        surface.blit(self.image, (0, 0))
-        self.enemyWpPx = self.drawWaypoint()
-    
-    def criarBandeira (self):
-        for bandeira in self.bandeirasPx:
-            bandeira = BotaoBandeira (BotaoBandeira.imgBandeira, self.bandeirasPx[0], self.bandeirasPx[1] )
-            gp.grupoBandeira.add(bandeira)
-        return gp.grupoBandeira
-    
-    def coordbandeiras(self):
-        bandeiras = [
+        self.drawWaypoint()
+        self.flagButtonsPos = [
             (2, 3),
             (10, 8),
             (4, 6),
@@ -52,17 +32,44 @@ class Mundo ():
             (8, 6),
             (7, 4),
             (11, 3),
+            (6, 1)
         ]
-        bandeirasPx = []
-        for x, y in bandeiras:
+        self.drawCoordbandeiras()
+
+    def drawWaypoint(self):
+        self.enemyWpPx = []
+        for x, y in self.enemyWp:
             if x > 0 and y > 0:
-                bandeirasPx.append(((x*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2,
-                                 (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
+                self.enemyWpPx.append(((x*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2,
+                                       (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
             elif x > 0:
-                bandeirasPx.append(((x*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2,
-                                 (y*c.TAMANHO_QUADRADO)))
+                self.enemyWpPx.append(((x*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2,
+                                       (y*c.TAMANHO_QUADRADO)))
             elif y > 0:
-                bandeirasPx.append(((x*c.TAMANHO_QUADRADO),
-                                 (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
-        return bandeirasPx
-    
+                self.enemyWpPx.append(((x*c.TAMANHO_QUADRADO),
+                                       (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
+
+    def draw(self, screen, world_state):
+        screen.blit(self.image, (0, 0))
+        self.flagsGroup.draw(screen)
+        for flag in self.flags:
+            flag.draw(screen)
+        self.drawWaypoint()
+
+    def drawCoordbandeiras(self):
+        self.flagButtonsPx = []
+        for x, y in self.flagButtonsPos:
+            if x > 0 and y > 0:
+                self.flagButtonsPx.append(((x*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2,
+                                           (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
+            elif x > 0:
+                self.flagButtonsPx.append(((x*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2,
+                                           (y*c.TAMANHO_QUADRADO)))
+            elif y > 0:
+                self.flagButtonsPx.append(((x*c.TAMANHO_QUADRADO),
+                                           (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
+        print(self.midia.img_bandeira_btn)
+        self.flags = [BotaoBandeira((x, y), self.midia.img_bandeira_btn)
+                      for x, y in self.flagButtonsPx]
+        for flag in self.flags:
+            self.flagsGroup.add(flag)

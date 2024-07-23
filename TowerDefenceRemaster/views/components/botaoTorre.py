@@ -4,8 +4,8 @@ import constantes as c
 
 
 class BotaoTorre(Botao):
-    def __init__(self, x, y, image):
-        super().__init__(x, y, image)
+    def __init__(self, px, image):
+        super().__init__(px, image)
         self.pos = pg.mouse.get_pos()
         
     def action(self, state, world_state):

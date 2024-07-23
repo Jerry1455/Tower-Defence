@@ -7,7 +7,6 @@ import constantes as c
 import constantes.paletaDeCores as pdc
 from views.components.menu import Menu
 from views.components.botaoBandeira import BotaoBandeira
-from views.components.grupos import Grupos as gp
 
 # iniciar o pygame
 pg.init()
@@ -41,8 +40,8 @@ imgZombieRato = pgim('midia/imagens/inimigos/zombieRato.png').convert_alpha()
 imgTorre = pgim('midia/imagens/torres/torre1.png').convert_alpha()
 
 # Imagens botões
-imgCancelBtn = pgim('midia/imagens/botao/cancelBtn.png').convert_alpha()
-imgBandeira = pgim('midia/imagens/botao/bandeira.png').convert_alpha()
+imgCancelBtn =     pgim('midia/imagens/botao/cancelBtn.png').convert_alpha()
+img_bandeira_btn = pgim('midia/imagens/botao/bandeira.png').convert_alpha()
 
 '''
 def criarTorre(posMouse):
@@ -50,44 +49,41 @@ def criarTorre(posMouse):
     mouseQuadY = posMouse[1] // c.TAMANHO_QUADRADO
     torre = Torre(imgTorre, mouseQuadX, mouseQuadY)
     grupoTorre.add(torre)
-'''     
-def selecionar (posMouse):
+'''
+
+
+def selecionar(posMouse):
     mouseQdrx = posMouse[0] // c.TAMANHO_QUADRADO
     mouseQdry = posMouse[1] // c.TAMANHO_QUADRADO
     for bandeira in grupoBandeira:
-        if(mouseQdrx, mouseQdry) == (bandeira.quadradoX, bandeira.quadradoY):
-             return bandeira
-            
-def limparSelecao ():
+        if (mouseQdrx, mouseQdry) == (bandeira.quadradoX, bandeira.quadradoY):
+            return bandeira
+
+
+def limparSelecao():
     for bandeira in grupoBandeira:
-         bandeira.clicado = False
+        bandeira.clicado = False
 
 
 # criar Mundo
 mundo = Mundo(imgMapa, tela)
-
 # Criar menu
 menu = Menu(tela)
 
 # criar botões
-'''
-for bandeira in mundo.bandeirasPx:
-    botaoBandeira = Botao(mundo.bandeirasPx[0], mundo.bandeiraPx[1], imgBandeira)
-'''
-
-botaoCancel = Botao(c.TELA_LARGURA + 50, 180, imgCancelBtn)
+botaoCancel = Botao((c.TELA_LARGURA + 50, 180), imgCancelBtn)
+botaoBandeira = Botao((),img_bandeira_btn)
 
 inimigo = Inimigo(mundo.enemyWpPx, imgZombieNorm)
 grupoInimigo = pg.sprite.Group()
 grupoTorre = pg.sprite.Group()
-grupoBandeira = pg.sprite.Group()
+grupoTeste = pg.sprite.Group()
 
 grupoInimigo.add(inimigo)
 
 
-
 world_state = {
-    
+
 }
 # loop do jogo
 rodar = True
@@ -101,19 +97,17 @@ while rodar:
     grupoInimigo.update()
     clock.tick(c.FPS)
     tela.fill(pdc.bege)
-    
-    #print(grupoBandeira)
+
 
     # desenhar o level
     mundo.draw(tela)
     grupoInimigo.draw(tela)
     grupoTorre.draw(tela)
-    grupoBandeira.draw(tela)
     
 
     # desenhar caminho do inimigo
     pg.draw.lines(tela, pdc.cinza, False, mundo.enemyWpPx)
-
+    
     menu.draw(world_state)
 
     #########################
@@ -134,10 +128,10 @@ while rodar:
                 c.bandeiraClicado = None
                 limparSelecao()
                 if colocarTorre is True:
-                    criarTorre (posMouse)
+                    criarTorre(posMouse)
                 else:
                     bandeiraClicado = (posMouse)
-                 
+
     # atualizar a tela
     pg.display.flip()
 pg.quit()

@@ -3,8 +3,8 @@ import pygame as pg
 import constantes as c
 
 class BotaoCancel(Botao):
-    def __init__(self, x, y, image):
-        super().__init__(x, y, image)
+    def __init__(self, px, image):
+        super().__init__(px, image)
         
     def draw(self, screen, state, world_state):
         # pegar a posição do mouse

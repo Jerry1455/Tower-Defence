@@ -51,7 +51,6 @@ def criarTorre(posMouse):
     grupoTorre.add(torre)
 '''
 
-
 def selecionar(posMouse):
     mouseQdrx = posMouse[0] // c.TAMANHO_QUADRADO
     mouseQdry = posMouse[1] // c.TAMANHO_QUADRADO
@@ -59,11 +58,9 @@ def selecionar(posMouse):
         if (mouseQdrx, mouseQdry) == (bandeira.quadradoX, bandeira.quadradoY):
             return bandeira
 
-
 def limparSelecao():
     for bandeira in grupoBandeira:
         bandeira.clicado = False
-
 
 # criar Mundo
 mundo = Mundo(imgMapa, tela)
@@ -72,7 +69,6 @@ menu = Menu(tela)
 
 # criar botões
 botaoCancel = Botao((c.TELA_LARGURA + 50, 180), imgCancelBtn)
-botaoBandeira = Botao((),img_bandeira_btn)
 
 inimigo = Inimigo(mundo.enemyWpPx, imgZombieNorm)
 grupoInimigo = pg.sprite.Group()
@@ -81,14 +77,13 @@ grupoTeste = pg.sprite.Group()
 
 grupoInimigo.add(inimigo)
 
-
 world_state = {
 
 }
 # loop do jogo
 rodar = True
 while rodar:
-
+    
     ################
     # ATUALIZANDO #
     ################
@@ -98,13 +93,11 @@ while rodar:
     clock.tick(c.FPS)
     tela.fill(pdc.bege)
 
-
     # desenhar o level
     mundo.draw(tela)
     grupoInimigo.draw(tela)
     grupoTorre.draw(tela)
     
-
     # desenhar caminho do inimigo
     pg.draw.lines(tela, pdc.cinza, False, mundo.enemyWpPx)
     
@@ -116,21 +109,15 @@ while rodar:
 
     # gerenciar eventos
     for event in pg.event.get():
-        print(event)
+        if event.type !=  pg.MOUSEMOTION: 
+            print(event)
         # fechar jogo
+        mundo.update(event)
         if event.type == pg.QUIT:
             rodar = False
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             posMouse = pg.mouse.get_pos()
             # checar se o mouse está na área do jogo
-            if posMouse[0] < c.TELA_LARGURA and posMouse[1] < c.TELA_ALTURA:
-                criarTorre(posMouse)
-                c.bandeiraClicado = None
-                limparSelecao()
-                if colocarTorre is True:
-                    criarTorre(posMouse)
-                else:
-                    bandeiraClicado = (posMouse)
 
     # atualizar a tela
     pg.display.flip()

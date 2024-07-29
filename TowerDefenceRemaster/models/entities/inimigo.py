@@ -56,12 +56,11 @@ class Inimigo (pg.sprite.Sprite):
         if math.cos(math.radians(self.angulo)) == -1 and self.fliped is False:
             self.image = pg.transform.flip(self.image, True, False)
             self.fliped = True
-            print("flipped")
 
         if math.cos(math.radians(self.angulo)) == 1 and self.fliped is True:
             self.image = pg.transform.flip(self.image, True, False)
             self.fliped = False
-            print("flipped")
+
 
         self.rect = self.image.get_rect()
         self.rect.center = self.pos

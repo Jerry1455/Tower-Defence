@@ -2,6 +2,7 @@ import pygame as pg
 import constantes as c
 from views.components.botaoBandeira import BotaoBandeira
 from midia.access import Midia
+from importData import ImportData
 
 
 class Mundo ():
@@ -11,6 +12,8 @@ class Mundo ():
         self.enemyWpPx = []
         self.flags = []
         self.flagsGroup = pg.sprite.Group()
+        self.flagImage = self.midia.img_bandeira_btn
+        self.data = ImportData()
 
         screen.blit(self.image, (0, 0))
         self.enemyWp = [
@@ -24,16 +27,7 @@ class Mundo ():
             (11, 9),
         ]
         self.drawWaypoint()
-        self.flagButtonsPos = [
-            (2, 3),
-            (10, 8),
-            (4, 6),
-            (11, 6),
-            (8, 6),
-            (7, 4),
-            (11, 3),
-            (6, 1)
-        ]
+        self.flagButtonsPos = self.data.map()['bandeiras']
         self.drawCoordbandeiras()
 
     def drawWaypoint(self):
@@ -49,7 +43,7 @@ class Mundo ():
                 self.enemyWpPx.append(((x*c.TAMANHO_QUADRADO),
                                        (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
 
-    def draw(self, screen, world_state):
+    def draw(self, screen):
         screen.blit(self.image, (0, 0))
         self.flagsGroup.draw(screen)
         for flag in self.flags:
@@ -68,8 +62,21 @@ class Mundo ():
             elif y > 0:
                 self.flagButtonsPx.append(((x*c.TAMANHO_QUADRADO),
                                            (y*c.TAMANHO_QUADRADO)-c.TAMANHO_QUADRADO/2))
-        print(self.midia.img_bandeira_btn)
-        self.flags = [BotaoBandeira((x, y), self.midia.img_bandeira_btn)
+        self.flags = [BotaoBandeira((x, y), self.flagImage)
                       for x, y in self.flagButtonsPx]
         for flag in self.flags:
             self.flagsGroup.add(flag)
+
+    def update(self, event):
+        for flagCount in range(0, len(self.flags)):
+            if self.flags[flagCount] == None:
+                self.flags[flagCount] = BotaoBandeira(
+                    self.flagButtonsPx[flagCount], self.flagImage)
+                self.flagsGroup.add(self.flags[flagCount])
+            updateToTurret = self.flags[flagCount].update(event)
+            if updateToTurret:
+                self.flagsGroup.remove(self.flags[flagCount])
+
+                self.flags[flagCount] = self.flags[flagCount].turret
+                self.flagsGroup.add(self.flags[flagCount])
+                updateToTurret = False

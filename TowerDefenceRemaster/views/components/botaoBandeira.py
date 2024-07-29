@@ -1,6 +1,9 @@
 from views.components.baseComponents.botao import Botao
 import pygame as pg
 import constantes as c
+from midia.access import Midia
+from .botaoTorreta import BotaoTorreta
+
 
 class BotaoBandeira(Botao):
     def __init__(self, px, image):
@@ -8,27 +11,77 @@ class BotaoBandeira(Botao):
         self.pos = pg.mouse.get_pos()
         self.grupoBandeira = pg.sprite.Group()
         self.image = image
+        self.midia = Midia()
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
-        
-    def action (self, state, world_state):
+        self.menuOpen = False
+        self.menuOpenAction = False
+        self.menuCloseAction = False
+        self.calculateButtonTurret()
+        self.buttonTurrets = []
+        self.spritesTurrets = [
+            self.midia.img_iconeDMG_btn,
+            self.midia.img_iconeAREA_btn
+        ]
+        self.turretTypes = [
+            'pistola',
+            'bomba'
+        ]
+
+    def action(self, state, world_state):
         state['botaoBandeira'] = True
         return state
 
-    def draw(self, screen, world_state):
-        print(self)
+    def draw(self, screen):
+        if self.menuOpenAction == True:
+
+            for buttonPx, image, turretType in zip(self.buttonTurretPx, self.spritesTurrets, self.turretTypes):
+                print(buttonPx,image)
+                self.buttonTurrets.append(BotaoTorreta(buttonPx, image, turretType))
+                self.menuOpen = True
+                self.menuOpenAction = False
+
+        if self.menuCloseAction and self.menuOpen:
+            self.buttonTurrets = []
+            self.menuOpen = False
+            self.menuCloseAction = False
+
+        if self.buttonTurrets != [] and self.menuOpen == True:
+
+            for buttonTurret in self.buttonTurrets:
+                buttonTurret.draw(screen)
+
         screen.blit(self.image, self.rect)
-        
-        # pegar a posição do mouse
+
+    def update(self, event):
         pos = pg.mouse.get_pos()
-            
-        # checar se o mouse clickou e outras paradas
-        if self.rect.collidepoint (pos):
-            if pg.mouse.get_pressed()[0] == 1 and self.clicado == False:
-                state = self.action(state, world_state)
-        if pg.mouse.get_pressed ()[0] == 0 :
-            self.clicado = False
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            if self.buttonTurrets != [] and self.menuOpen:
+                for turret in self.buttonTurrets:
+                    resultUpdate, self.turret = turret.update(event, self)
+                    if resultUpdate:
+                        return resultUpdate
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            pos = pg.mouse.get_pos()
+            if self.rect.collidepoint(event.pos):
+                self.menuOpenAction = True
+            else:
+                self.menuCloseAction = True
+        return False
 
-        screen.blit(self.image, self.rect)
+    def calculateButtonTurret(self):
 
-        return state
+
+
+        if self.y < 18:
+            self.buttonTurretPx = [
+                (self.x - 8, self.y+25+16),
+                (self.x + 8, self.y+25),
+                (self.x + 8, self.y+25+16)
+            ]
+        else:
+            self.buttonTurretPx = [
+                (self.x - 8, self.y-25),
+                (self.x + 8, self.y-25-16),
+                (self.x + 8, self.y-25)
+            ]

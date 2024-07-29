@@ -8,4 +8,5 @@ TELA_ALTURA = TAMANHO_QUADRADO * LINHAS
 PAINEL = ((TAMANHO_ICONES * 2) + (OFF_SET*3))
 FPS = 60
 
+
 bandeiraClicado = None

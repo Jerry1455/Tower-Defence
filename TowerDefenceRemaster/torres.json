@@ -1,0 +1,16 @@
+{
+    "bomba": {
+        "btnSprite": "",
+        "torreSprite": "midia/imagens/torres/bomba/1/bomba.png",
+        "timeAttack": "50",
+        "attack": "50",
+        "typeDamage": "area"
+    },
+    "pistola": {
+        "btnSprite": "",
+        "torreSprite": "midia/imagens/torres/pistola/1/pistola.png",
+        "timeAttack": "100",
+        "attack": "100",
+        "typeDamage": "unico"
+    }
+}

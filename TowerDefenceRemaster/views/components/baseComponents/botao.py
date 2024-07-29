@@ -11,3 +11,6 @@ class Botao (pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = (px[0], px[1])
         self.clicado = False
+        
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)

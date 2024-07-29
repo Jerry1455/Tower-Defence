@@ -3,13 +3,15 @@ import constantes as c
 from views.components.botaoBandeira import BotaoBandeira
 from midia.access import Midia
 from importData import ImportData
+from models.entities.inimigo import Inimigo
 
 
 class Mundo ():
     def __init__(self, imgMapa, screen):
         self.midia = Midia()
         self.image = imgMapa
-        self.enemyWpPx = []
+
+        # Flags
         self.flags = []
         self.flagsGroup = pg.sprite.Group()
         self.flagImage = self.midia.img_bandeira_btn
@@ -30,6 +32,22 @@ class Mundo ():
         self.flagButtonsPos = self.data.map()['bandeiras']
         self.drawCoordbandeiras()
 
+        # Inimigo
+        self.setDifficult()
+        self.enemyWpPx = []
+        self.enemyCount = 0
+        self.drawWaypoint()
+        self.grupoInimigo = pg.sprite.Group()
+        self.addEnemy()
+
+
+    def setDifficult(self):
+        pg.time.set_timer(c.ENEMYEVENT, 5000)
+
+    def addEnemy(self):
+        self.enemyCount += 1
+        self.grupoInimigo.add(Inimigo(self.enemyWpPx, self.midia.img_zombie_norm))
+
     def drawWaypoint(self):
         self.enemyWpPx = []
         for x, y in self.enemyWp:
@@ -49,6 +67,7 @@ class Mundo ():
         for flag in self.flags:
             flag.draw(screen)
         self.drawWaypoint()
+        self.grupoInimigo.draw(screen)
 
     def drawCoordbandeiras(self):
         self.flagButtonsPx = []
@@ -68,15 +87,18 @@ class Mundo ():
             self.flagsGroup.add(flag)
 
     def update(self, event):
-        for flagCount in range(0, len(self.flags)):
+        for flagCount, flag in enumerate(self.flags):
             if self.flags[flagCount] == None:
                 self.flags[flagCount] = BotaoBandeira(
                     self.flagButtonsPx[flagCount], self.flagImage)
                 self.flagsGroup.add(self.flags[flagCount])
-            updateToTurret = self.flags[flagCount].update(event)
+            updateToTurret = flag.update(event)
             if updateToTurret:
                 self.flagsGroup.remove(self.flags[flagCount])
 
-                self.flags[flagCount] = self.flags[flagCount].turret
+                self.flags[flagCount] = flag.turret
                 self.flagsGroup.add(self.flags[flagCount])
                 updateToTurret = False
+        if event.type == c.ENEMYEVENT:
+            self.addEnemy()
+        

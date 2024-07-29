@@ -1,3 +1,4 @@
+import pygame as pg
 LINHAS = 8
 COLUNAS = 12
 TAMANHO_QUADRADO = 32
@@ -8,5 +9,6 @@ TELA_ALTURA = TAMANHO_QUADRADO * LINHAS
 PAINEL = ((TAMANHO_ICONES * 2) + (OFF_SET*3))
 FPS = 60
 
+ENEMYEVENT = pg.USEREVENT + 1
 
 bandeiraClicado = None

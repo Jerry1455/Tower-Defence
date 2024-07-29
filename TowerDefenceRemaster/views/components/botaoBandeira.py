@@ -27,6 +27,7 @@ class BotaoBandeira(Botao):
             'pistola',
             'bomba'
         ]
+        self.turret = None
 
     def action(self, state, world_state):
         state['botaoBandeira'] = True
@@ -55,12 +56,12 @@ class BotaoBandeira(Botao):
 
     def update(self, event):
         pos = pg.mouse.get_pos()
-        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-            if self.buttonTurrets != [] and self.menuOpen:
-                for turret in self.buttonTurrets:
-                    resultUpdate, self.turret = turret.update(event, self)
-                    if resultUpdate:
-                        return resultUpdate
+        if self.buttonTurrets != [] and self.menuOpen:
+            for turret in self.buttonTurrets:
+                resultUpdate, self.turret = turret.update(event, self)
+                if resultUpdate:
+                    return resultUpdate
+                    
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             pos = pg.mouse.get_pos()
             if self.rect.collidepoint(event.pos):
@@ -70,9 +71,7 @@ class BotaoBandeira(Botao):
         return False
 
     def calculateButtonTurret(self):
-
-
-
+        
         if self.y < 18:
             self.buttonTurretPx = [
                 (self.x - 8, self.y+25+16),

@@ -50,9 +50,6 @@ class Inimigo (pg.sprite.Sprite):
         self.angulo = math.degrees(math.atan2(-dist[1], dist[0]))
 
         # rotacionar a imagem e atualizar o retangulo
-        # self.image = pg.transform.rotate(self.imagemOriginal, self.angulo)
-        # self.rect = self.image.get_rect()
-        # self.rect.center = self.pos
         if math.cos(math.radians(self.angulo)) == -1 and self.fliped is False:
             self.image = pg.transform.flip(self.image, True, False)
             self.fliped = True
@@ -60,7 +57,6 @@ class Inimigo (pg.sprite.Sprite):
         if math.cos(math.radians(self.angulo)) == 1 and self.fliped is True:
             self.image = pg.transform.flip(self.image, True, False)
             self.fliped = False
-
 
         self.rect = self.image.get_rect()
         self.rect.center = self.pos

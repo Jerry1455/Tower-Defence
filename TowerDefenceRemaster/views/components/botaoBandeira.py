@@ -1,17 +1,22 @@
 from views.components.baseComponents.botao import Botao
 import pygame as pg
-import constantes as c
 from midia.access import Midia
 from .botaoTorreta import BotaoTorreta
+import constantes as c
 
 
-class BotaoBandeira(Botao):
+class BotaoBandeira(pg.sprite.Sprite):
     def __init__(self, px, image):
-        super().__init__(px, image)
+        pg.sprite.Sprite.__init__(self)
+
         self.pos = pg.mouse.get_pos()
         self.grupoBandeira = pg.sprite.Group()
-        self.image = image
+        self.animation = []
+        self.setImage(image)
+        self.actualFrame = 0
         self.midia = Midia()
+        self.x = px[0]
+        self.y = px[1]
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
         self.menuOpen = False
@@ -28,6 +33,23 @@ class BotaoBandeira(Botao):
             'bomba'
         ]
         self.turret = None
+        self.coldowAnimation = 7
+
+    def animate(self):
+        self.actualFrame += 1
+        if self.actualFrame >= self.frames:
+            self.actualFrame = 0
+
+    def setImage(self, image):
+        print(image.get_height())
+        if image.get_height() > c.TAMANHO_QUADRADO:
+            frames = round(image.get_height() / c.TAMANHO_QUADRADO)
+            for i in range(0, frames):
+                frame = pg.transform.scale_by(image.subsurface(
+                    0, i * c.TAMANHO_QUADRADO, c.TAMANHO_QUADRADO, c.TAMANHO_QUADRADO), c.MULTI)
+                self.image = frame
+                self.animation.append(frame)
+            self.frames = len(self.animation)
 
     def action(self, state, world_state):
         state['botaoBandeira'] = True
@@ -37,8 +59,9 @@ class BotaoBandeira(Botao):
         if self.menuOpenAction == True:
 
             for buttonPx, image, turretType in zip(self.buttonTurretPx, self.spritesTurrets, self.turretTypes):
-                print(buttonPx,image)
-                self.buttonTurrets.append(BotaoTorreta(buttonPx, image, turretType))
+                print(buttonPx, image)
+                self.buttonTurrets.append(
+                    BotaoTorreta(buttonPx, image, turretType))
                 self.menuOpen = True
                 self.menuOpenAction = False
 
@@ -52,7 +75,13 @@ class BotaoBandeira(Botao):
             for buttonTurret in self.buttonTurrets:
                 buttonTurret.draw(screen)
 
-        screen.blit(self.image, self.rect)
+        if self.animation == []:
+            screen.blit(self.image, self.rect)
+        else:
+            self.image = self.animation[self.actualFrame]
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
+            screen.blit(self.image, self.rect)
 
     def update(self, event):
         pos = pg.mouse.get_pos()
@@ -60,8 +89,9 @@ class BotaoBandeira(Botao):
             for turret in self.buttonTurrets:
                 resultUpdate, self.turret = turret.update(event, self)
                 if resultUpdate:
+                    self.grupoBandeira.add(self, self.turret)
                     return resultUpdate
-                    
+
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             pos = pg.mouse.get_pos()
             if self.rect.collidepoint(event.pos):
@@ -71,16 +101,16 @@ class BotaoBandeira(Botao):
         return False
 
     def calculateButtonTurret(self):
-        
+
         if self.y < 18:
             self.buttonTurretPx = [
-                (self.x - 8, self.y+25+16),
-                (self.x + 8, self.y+25),
-                (self.x + 8, self.y+25+16)
+                (self.x - 8*c.MULTI, self.y+41*(c.MULTI)),
+                (self.x + 8*c.MULTI, self.y+25*(c.MULTI)),
+                (self.x + 8*c.MULTI, self.y+41*(c.MULTI))
             ]
         else:
             self.buttonTurretPx = [
-                (self.x - 8, self.y-25),
-                (self.x + 8, self.y-25-16),
-                (self.x + 8, self.y-25)
+                (self.x - 8*c.MULTI, self.y-25*(c.MULTI)),
+                (self.x + 8*c.MULTI, self.y-41*(c.MULTI)),
+                (self.x + 8*c.MULTI, self.y-25*(c.MULTI))
             ]

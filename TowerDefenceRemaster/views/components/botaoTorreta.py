@@ -28,6 +28,9 @@ class BotaoTorreta(Botao):
         self.rangeImage.set_alpha(100)
         self.range_rect = self.rangeImage.get_rect()
 
+    def animate(self):
+        self.image.get_height()
+
     def action(self, state, world_state):
         return state
 

@@ -1,4 +1,5 @@
 import pygame as pg
+import constantes as c
 
 class Midia:
     def __init__(self):
@@ -14,11 +15,25 @@ class Midia:
 
         # imagenns Torres
         self.img_torre = pgim('midia/imagens/torres/dmgTorreStand.png').convert_alpha()
+        self.img_pistola = pgim("midia/imagens/torres/pistola/1/pistola.png").convert_alpha()
         
-
+        
         # Imagens botões
         self.img_cancel_btn = pgim ('midia/imagens/botao/cancelBtn.png').convert_alpha()
-        self.img_bandeira_btn = pgim ('midia/imagens/botao/bandeira.png').convert_alpha()
+        self.img_bandeira_btn = pgim ('midia/imagens/botao/bandeira/spriteSheet.png').convert_alpha()
         self.img_iconeDMG_btn = pgim ('midia/imagens/botao/iconeDmg.png').convert_alpha()
         self.img_iconeMGC_btn = pgim ('midia/imagens/botao/iconeMgc.png').convert_alpha()
         self.img_iconeAREA_btn = pgim ('midia/imagens/botao/iconeArea.png').convert_alpha()
+        
+        #definir o tamanho das imagens
+        self.img_mapa = pg.transform.scale_by(self.img_mapa,c.MULTI)
+        self.img_pistola = pg.transform.scale_by(self.img_pistola,c.MULTI)
+        self.img_zombie_norm = pg.transform.scale_by( self.img_zombie_norm,c.MULTI)
+        self.img_zombie_fort = pg.transform.scale_by(self.img_zombie_fort,c.MULTI)
+        self.img_zombie_arm = pg.transform.scale_by( self.img_zombie_arm,c.MULTI)
+        self.img_zombie_rato = pg.transform.scale_by( self.img_zombie_rato,c.MULTI)
+        self.img_torre = pg.transform.scale_by(self.img_torre ,c.MULTI)
+        self.img_cancel_btn = pg.transform.scale_by(self.img_cancel_btn,c.MULTI)
+        self.img_iconeDMG_btn = pg.transform.scale_by(self.img_iconeDMG_btn,c.MULTI)
+        self.img_iconeMGC_btn = pg.transform.scale_by(self.img_iconeMGC_btn ,c.MULTI)
+        self.img_iconeAREA_btn = pg.transform.scale_by(self.img_iconeAREA_btn ,c.MULTI)

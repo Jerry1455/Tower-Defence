@@ -7,9 +7,12 @@ import constantes as c
 class Inimigo (pg.sprite.Sprite):
     def __init__(self, enemyWpPx, image):
         pg.sprite.Sprite.__init__(self)
+        self._vida = 5
+        self.vida = 5
         self.enemyWpPx = enemyWpPx
         self.pos = Vector2(self.enemyWpPx[0])
         self.alvo_enemyWpPx = 0
+        self.morto = False
         self.speed = 2
         self.angulo = 0
         self.imagemOriginal = image
@@ -17,6 +20,17 @@ class Inimigo (pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
         self.fliped = True
+
+    @property
+    def vida(self):
+        return self._vida
+
+    @vida.setter
+    def vida(self,vida):
+        if vida < 1:
+            self.morto = True
+        else:
+            self._vida = vida
 
     def update(self):
         self.move()
@@ -60,3 +74,7 @@ class Inimigo (pg.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+
+    def draw(self, screen):
+        
+        screen.blit(self.image, self.rect)

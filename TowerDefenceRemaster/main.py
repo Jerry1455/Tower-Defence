@@ -6,6 +6,7 @@ import constantes as c
 import constantes.paletaDeCores as pdc
 from views.components.menu import Menu
 from views.components.botaoBandeira import BotaoBandeira
+from midia.access import Midia
 
 # iniciar o pygame
 pg.init()
@@ -14,7 +15,7 @@ pgim = pg.image.load
 clock = pg.time.Clock()
 
 # criar a tela do jogo
-tela = pg.display.set_mode((c.TELA_LARGURA + c.PAINEL, c.TELA_ALTURA))
+tela = pg.display.set_mode((c.TELA_LARGURA, c.TELA_ALTURA))
 pg.display.set_caption("Tower Defence")
 
 
@@ -22,19 +23,14 @@ pg.display.set_caption("Tower Defence")
 # carregar imagem #
 ###################
 # TODO: Sprite Loader
-# imagens mapa
-imgMapa = pgim('midia/levels/level-0.png').convert_alpha()
-
-imgCancelBtn = pgim('midia/imagens/botao/cancelBtn.png').convert_alpha()
-img_bandeira_btn = pgim('midia/imagens/botao/bandeira.png').convert_alpha()
-
+midia = Midia()
 # criar Mundo
-mundo = Mundo(imgMapa, tela)
+mundo = Mundo(midia.img_mapa, tela)
 # Criar menu
 menu = Menu(tela)
 
 # criar botões
-botaoCancel = Botao((c.TELA_LARGURA + 50, 180), imgCancelBtn)
+
 world_state = {}
 # loop do jogo
 rodar = True
@@ -46,6 +42,7 @@ while rodar:
 
     # atualizar level
     clock.tick(c.FPS)
+
     tela.fill(pdc.bege)
 
     # desenhar o level
@@ -57,7 +54,7 @@ while rodar:
     #########################
     # GERENCIANDONoneTOS  #
     #########################
-    mundo.grupoInimigo.update()
+    mundo.enemyUpdate()
     # gerenciar eventos
     for event in pg.event.get():
 

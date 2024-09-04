@@ -1,0 +1,20 @@
+{
+    "bomba": {
+        "btnSprite": "",
+        "torreSprite": "midia/imagens/torres/bomba/1/spriteSheet.png",
+        "torreSpriteFire" : "midia/imagens/torres/bomba/1/spriteSheetFire.png",
+        "torreSpriteFireFlip": "midia/imagens/torres/bomba/1/spriteSheetFireFlip.png",
+        "timeAttack": "50",
+        "attack": "200",
+        "typeDamage": "area"
+    },
+    "pistola": {
+        "btnSprite": "",
+        "torreSprite": "midia/imagens/torres/pistola/1/spriteSheet.png",
+        "torreSpriteFire": "midia/imagens/torres/pistola/1/spriteSheetFire.png",
+        "torreSpriteFireFlip": "midia/imagens/torres/pistola/1/spriteSheetFireFlip.png",
+        "timeAttack": "500",
+        "attack": "500",
+        "typeDamage": "unico"
+    }
+}

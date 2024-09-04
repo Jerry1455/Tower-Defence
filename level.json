@@ -1,0 +1,15 @@
+{
+   "enemySpawnTime": 600,
+    "enemys":[
+        {
+            "name":"ZombieNormal",
+            "spriteSheet": "'midia/imagens/inimigos/zombieNormal/spriteSheet.png'",
+            "spawnRate": 0, 
+            "vida":10,
+            "value":8,
+            "speed":2
+        }
+    ],
+    "enemyRate": 1,
+    "enemyRateScale": 0.1
+}

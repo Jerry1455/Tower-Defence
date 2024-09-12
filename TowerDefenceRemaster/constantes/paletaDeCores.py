@@ -1,5 +1,0 @@
-verde1 = ("#98A62E")
-verde2 = ("#77A632")
-verde3 = ("#537324")
-bege  = ("#D9AE5F")
-cinza = ("#8C8070")

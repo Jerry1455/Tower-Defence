@@ -15,5 +15,5 @@ class ImportData:
             return json.load(file)[particletype]
         
     def setDifficult(self):
-        with open('level.json','r', enconding='utf-8') as file:
+        with open('level.json','r', encoding='utf-8') as file:
             return json.load(file)

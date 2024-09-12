@@ -44,7 +44,7 @@ class Mundo ():
             (11, 9),
         ]
         self.drawWaypoint()
-        self.levelDifficult = self.data.level()
+        self.levelDifficult = self.data.setDifficult()
         self.flagButtonsPos = self.data.map()['bandeiras']
         self.drawCoordbandeiras()
         self.coldownAnimation = 0
@@ -64,7 +64,7 @@ class Mundo ():
         self.enemyCount += 1
         enemySort = []
         for enemy in self.levelDifficult["enemys"]:
-            for i in enemy['enemySpawnRate']:
+            for i in range(0,enemy['spawnRate']):
                 enemySort.append(enemy)
             
         chosenEnemy = enemySort[random.randint(0,len(enemySort)-1)]

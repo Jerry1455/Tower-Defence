@@ -3,13 +3,39 @@
     "enemys":[
         {
             "name":"ZombieNormal",
-            "spriteSheet": "'midia/imagens/inimigos/zombieNormal/spriteSheet.png'",
-            "spawnRate": 0, 
+            "spriteSheet": "midia/imagens/inimigos/zombieNormal/spriteSheet.png",
+            "spawnRate": 2, 
+            "vida":10,
+            "value":8,
+            "speed":2
+
+        },
+        {
+            "name":"ZombieArm",
+            "spriteSheet": "midia/imagens/inimigos/zombieArm/spriteSheet.png",
+            "spawnRate": 2, 
+            "vida":10,
+            "value":8,
+            "speed":2
+        },
+        {
+            "name":"ZombieForte",
+            "spriteSheet": "midia/imagens/inimigos/zombieForte/spriteSheet.png",
+            "spawnRate": 2, 
+            "vida":10,
+            "value":8,
+            "speed":2
+        },
+        {
+            "name":"ZombieRato",
+            "spriteSheet": "midia/imagens/inimigos/zombieRato/spriteSheet.png",
+            "spawnRate": 2, 
             "vida":10,
             "value":8,
             "speed":2
         }
+        
     ],
-    "enemyRate": 1,
+    "enemyRate": 300,
     "enemyRateScale": 0.1
 }

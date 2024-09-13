@@ -1,6 +1,6 @@
 import pygame as pg
 import constantes as c
-
+## classe onde os sprites são carregados e são ampliados para a resolução correta
 class Midia:
     def __init__(self):
         pgim = pg.image.load

@@ -48,10 +48,16 @@ class BotaoTorreta(Botao):
             self.roudDraw = None
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             if self.rect.collidepoint(event.pos):
-                return True, Torre(
+                torre = Torre(
                     (flag.x, flag.y),
                     pg.image.load(self.data.torres()[
-                        self.turretType]['torreSprite']).convert_alpha(), 
+                        self.turretType]['torreSprite']).convert_alpha(),
                     pg.image.load(self.data.torres()[self.turretType]['torreSpriteFire']).convert_alpha()).setTurretType(self.turretType)
+
+                torre.price = self.data.torres()[self.turretType]['price']
+
+                torre.damage = self.data.torres()[self.turretType]['damage']
+
+                return True, torre
             return False, None
         return False, None

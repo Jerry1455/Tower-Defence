@@ -1,41 +1,53 @@
 {
-   "enemySpawnTime": 600,
+   "enemySpawnTime": 2222750,
+   "waveEnemyNumber": 10,
+   
     "enemys":[
-        {
+        [{
             "name":"ZombieNormal",
             "spriteSheet": "midia/imagens/inimigos/zombieNormal/spriteSheet.png",
-            "spawnRate": 2, 
-            "vida":10,
-            "value":8,
+            "spawnRate": 6, 
+            "vida":50,
+            "value":1,
             "speed":2
+
+        }],
+
+        [{
+            "name":"ZombieNormal",
+            "spriteSheet": "midia/imagens/inimigos/zombieNormal/spriteSheet.png",
+            "spawnRate": 6, 
+            "vida":10,
+            "value":1,
+            "speed":1.75
 
         },
         {
             "name":"ZombieArm",
             "spriteSheet": "midia/imagens/inimigos/zombieArm/spriteSheet.png",
             "spawnRate": 2, 
-            "vida":10,
-            "value":8,
-            "speed":2
+            "vida":20,
+            "value":5,
+            "speed":1.5
         },
         {
             "name":"ZombieForte",
             "spriteSheet": "midia/imagens/inimigos/zombieForte/spriteSheet.png",
-            "spawnRate": 2, 
-            "vida":10,
-            "value":8,
-            "speed":2
+            "spawnRate": 3, 
+            "vida":20,
+            "value":3,
+            "speed":1
         },
         {
             "name":"ZombieRato",
             "spriteSheet": "midia/imagens/inimigos/zombieRato/spriteSheet.png",
-            "spawnRate": 2, 
-            "vida":10,
-            "value":8,
-            "speed":2
-        }
-        
+            "spawnRate": 1, 
+            "vida":5,
+            "value":2,
+            "speed":3
+        }]
+
     ],
-    "enemyRate": 300,
+    "enemyRate": 150,
     "enemyRateScale": 0.1
 }
